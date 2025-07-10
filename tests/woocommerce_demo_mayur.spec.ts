@@ -13,7 +13,7 @@ test('Homepage responsiveness + Shop page content check', async ({ page }) => {
   await shopLinkDesktop.click();
 
   // === Wait for any product grid ===
-  const shopGrid = page.locator('ul.products, div.products, section.products, li.product');
+  const shopGrid = page.locator('.brodos-shop-page-category');
   await expect(shopGrid.first()).toBeVisible();
 
   await page.waitForTimeout(1000);
