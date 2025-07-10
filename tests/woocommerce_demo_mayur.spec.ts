@@ -4,12 +4,15 @@ import percySnapshot from '@percy/playwright';
 test('Header navigation responsiveness and links', async ({ page }) => {
   // === Desktop ===
   await page.setViewportSize({ width: 1280, height: 800 });
-  await page.goto('https://test-site.com');
+  await page.goto('https://mustershop-baiersdorf.de');
 
-  // OPTIONAL: Stop slider BEFORE snapshot if needed
+  // ✅ Ensure page is fully loaded
+  await page.waitForLoadState('networkidle');
+
+  // OPTIONAL: Stop slider if possible
   await page.evaluate(() => {
-    if (window.jQuery) {
-      window.jQuery('.your-slider-class').slick('slickPause');
+    if (window.jQuery && window.jQuery('.your-slider-class').length) {
+      window.jQuery('.your-slider-class').slick && window.jQuery('.your-slider-class').slick('slickPause');
     }
   });
 
@@ -19,21 +22,20 @@ test('Header navigation responsiveness and links', async ({ page }) => {
   await expect(shopLinkDesktop).toBeVisible();
   await shopLinkDesktop.click();
 
-  // ✅ Wait for new page load + add an **extra delay** for content to settle
   await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(2000); // Small buffer for content to settle
 
   await expect(page).toHaveURL(/.*shop/);
-
   await percySnapshot(page, 'Shop Page - Desktop');
 
   // === Tablet ===
   await page.setViewportSize({ width: 1024, height: 768 });
-  await page.goto('https://test-site.com');
+  await page.goto('https://mustershop-baiersdorf.de');
+  await page.waitForLoadState('networkidle');
 
   await page.evaluate(() => {
-    if (window.jQuery) {
-      window.jQuery('.your-slider-class').slick('slickPause');
+    if (window.jQuery && window.jQuery('.your-slider-class').length) {
+      window.jQuery('.your-slider-class').slick && window.jQuery('.your-slider-class').slick('slickPause');
     }
   });
 
@@ -41,11 +43,12 @@ test('Header navigation responsiveness and links', async ({ page }) => {
 
   // === Mobile ===
   await page.setViewportSize({ width: 375, height: 667 });
-  await page.goto('https://test-site.com');
+  await page.goto('https://mustershop-baiersdorf.de');
+  await page.waitForLoadState('networkidle');
 
   await page.evaluate(() => {
-    if (window.jQuery) {
-      window.jQuery('.your-slider-class').slick('slickPause');
+    if (window.jQuery && window.jQuery('.your-slider-class').length) {
+      window.jQuery('.your-slider-class').slick && window.jQuery('.your-slider-class').slick('slickPause');
     }
   });
 
