@@ -13,7 +13,7 @@ test('Homepage responsiveness + Shop page content check', async ({ page }) => {
   await shopLink.click();
 
   // ✅ Wait for your unique Shop page element
-  const shopPageCategory = page.locator('brodos-shop-page-category');
+  const shopPageCategory = page.locator('.brodos-product-item');
   await expect(shopPageCategory).toBeVisible();
 
   await page.waitForTimeout(1000); // Optional: buffer for animation
