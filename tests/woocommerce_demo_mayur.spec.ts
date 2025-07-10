@@ -23,7 +23,7 @@ test('Header navigation responsiveness and links', async ({ page }) => {
   await page.goto('https://mustershop-baiersdorf.de');
 
   // Functional: check header link
-  const aboutUsLink = page.locator('a:has-text("About Us")');
+  const aboutUsLink = page.locator('a:has-text("Über uns")');
   await expect(aboutUsLink).toBeVisible();
 
   // Click it and confirm navigation works
