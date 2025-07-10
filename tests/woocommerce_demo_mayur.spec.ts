@@ -1,12 +1,9 @@
 import { test } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
-test('Test Onlineshop1 Home Page', async ({ page }) => {
+test('Test Onlineshop1 Home Page Responsiveness', async ({ page }) => {
   await page.goto('https://mustershop-baiersdorf.de');
   await percySnapshot(page, 'Onlineshop1 Home Page');
-
-test('Onlineshop1 Home Responsive', async ({ page }) => {
-  await page.goto('https://mustershop-baiersdorf.de');
 
   // Desktop
   await page.setViewportSize({ width: 1280, height: 800 });
