@@ -1,15 +1,12 @@
 import { test, expect } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
-test('Header navigation responsiveness and links', async ({ page }) => {
-  // === Desktop ===
+test('Homepage responsiveness + Shop page check', async ({ page }) => {
+  // === Desktop Home ===
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('https://mustershop-baiersdorf.de');
-
-  // ✅ Ensure page is fully loaded
   await page.waitForLoadState('networkidle');
 
-  // OPTIONAL: Stop slider if possible
   await page.evaluate(() => {
     if (window.jQuery && window.jQuery('.your-slider-class').length) {
       window.jQuery('.your-slider-class').slick && window.jQuery('.your-slider-class').slick('slickPause');
@@ -23,12 +20,12 @@ test('Header navigation responsiveness and links', async ({ page }) => {
   await shopLinkDesktop.click();
 
   await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(2000); // Small buffer for content to settle
+  await page.waitForTimeout(2000);
 
   await expect(page).toHaveURL(/.*shop/);
   await percySnapshot(page, 'Shop Page - Desktop');
 
-  // === Tablet ===
+  // === Tablet Home ===
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.goto('https://mustershop-baiersdorf.de');
   await page.waitForLoadState('networkidle');
@@ -39,9 +36,9 @@ test('Header navigation responsiveness and links', async ({ page }) => {
     }
   });
 
-  await percySnapshot(page, 'Header - Tablet');
+  await percySnapshot(page, 'Home - Tablet');
 
-  // === Mobile ===
+  // === Mobile Home ===
   await page.setViewportSize({ width: 375, height: 667 });
   await page.goto('https://mustershop-baiersdorf.de');
   await page.waitForLoadState('networkidle');
@@ -52,5 +49,5 @@ test('Header navigation responsiveness and links', async ({ page }) => {
     }
   });
 
-  await percySnapshot(page, 'Header - Mobile');
+  await percySnapshot(page, 'Home - Mobile');
 });
