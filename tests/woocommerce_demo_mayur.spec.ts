@@ -5,6 +5,7 @@ test('Header navigation responsiveness and links', async ({ page }) => {
   // === Desktop: Functional Shop link ===
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('https://mustershop-baiersdorf.de');
+  await percySnapshot(page, 'Home - Desktop');
 
   const shopLinkDesktop = page.locator('a:has-text("Shop")').first();
   await expect(shopLinkDesktop).toBeVisible();
