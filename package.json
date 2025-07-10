@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "test-woocommerce": "percy exec -- playwright test tests/woocommerce_demo_mayur.spec.ts --reporter=dot"
+    "test-woocommerce": "percy exec -- playwright test tests/woocommerce_demo_mayur.spec.ts --reporter=dot",
     "test-web": "percy exec -- playwright test todomvc_snapshot.spec.js --reporter=dot",
     "test-automate-before": "percy exec -- playwright test bstackdemo_screenshot_before.spec.js --reporter=dot",
     "test-automate-after": "percy exec -- playwright test bstackdemo_screenshot_after.spec.js --reporter=dot"
