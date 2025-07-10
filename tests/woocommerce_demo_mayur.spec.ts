@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
 test('Test Onlineshop1 Home Page Responsiveness', async ({ page }) => {
-  await page.goto('https://test-site.com');
+  await page.goto('https://mustershop-baiersdorf.de/');
 
   // Desktop
   await page.setViewportSize({ width: 1280, height: 800 });
@@ -20,7 +20,7 @@ test('Test Onlineshop1 Home Page Responsiveness', async ({ page }) => {
 test('Header navigation responsiveness and links', async ({ page }) => {
   // === Desktop ===
   await page.setViewportSize({ width: 1280, height: 800 });
-  await page.goto('https://test-site.com');
+  await page.goto('https://mustershop-baiersdorf.de/');
 
   const shopLinkDesktop = page.locator('a:has-text("Shop")').first();
   await expect(shopLinkDesktop).toBeVisible();
@@ -30,7 +30,7 @@ test('Header navigation responsiveness and links', async ({ page }) => {
 
   // === Tablet ===
   await page.setViewportSize({ width: 1024, height: 768 });
-  await page.goto('https://test-site.com');
+  await page.goto('https://mustershop-baiersdorf.de/');
 
   const menuButtonTablet = page.locator('button[aria-label="Menü"], button[aria-label="Menu"]');
   if (await menuButtonTablet.isVisible()) {
@@ -45,7 +45,7 @@ test('Header navigation responsiveness and links', async ({ page }) => {
 
   // === Mobile ===
   await page.setViewportSize({ width: 375, height: 667 });
-  await page.goto('https://test-site.com');
+  await page.goto('https://mustershop-baiersdorf.de/');
 
   const menuButtonMobile = page.locator('button[aria-label="Menü"], button[aria-label="Menu"]');
   if (await menuButtonMobile.isVisible()) {
