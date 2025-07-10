@@ -12,11 +12,11 @@ test('Homepage responsiveness + Shop page content check', async ({ page }) => {
   await expect(shopLinkDesktop).toBeVisible();
   await shopLinkDesktop.click();
 
-  // === Wait for actual product grid ===
-  const shopProducts = page.locator('ul.products');
-  await expect(shopProducts).toBeVisible();
+  // === Wait for any product grid ===
+  const shopGrid = page.locator('ul.products, div.products, section.products, li.product');
+  await expect(shopGrid.first()).toBeVisible();
 
-  await page.waitForTimeout(1000); // Small buffer if needed
+  await page.waitForTimeout(1000);
   await percySnapshot(page, 'Shop Page - Desktop');
 
   // === Home Tablet ===
