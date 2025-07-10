@@ -1,36 +1,31 @@
 import { test, expect } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
-test('Homepage responsiveness + Shop page check', async ({ page }) => {
-  // === Desktop Home ===
+test('Homepage responsiveness + Shop page content check', async ({ page }) => {
+  // === Home Desktop ===
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('https://mustershop-baiersdorf.de');
-  await page.waitForLoadState('networkidle');
-
   await percySnapshot(page, 'Home - Desktop');
 
+  // === Click Shop link ===
   const shopLinkDesktop = page.locator('a:has-text("Shop")').first();
   await expect(shopLinkDesktop).toBeVisible();
   await shopLinkDesktop.click();
 
-  // Wait for navigation to complete and Shop page content to appear
-  await expect(page).toHaveURL(/.*shop/);
-  // Add a check for something unique on Shop page:
-  const shopContent = page.locator('.woocommerce-products, .products, h1:has-text("Shop")');
-  await expect(shopContent.first()).toBeVisible();
+  // === Wait for actual product grid ===
+  const shopProducts = page.locator('ul.products');
+  await expect(shopProducts).toBeVisible();
 
   await page.waitForTimeout(1000); // Small buffer if needed
   await percySnapshot(page, 'Shop Page - Desktop');
 
-  // === Tablet Home ===
+  // === Home Tablet ===
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.goto('https://mustershop-baiersdorf.de');
-  await page.waitForLoadState('networkidle');
   await percySnapshot(page, 'Home - Tablet');
 
-  // === Mobile Home ===
+  // === Home Mobile ===
   await page.setViewportSize({ width: 375, height: 667 });
   await page.goto('https://mustershop-baiersdorf.de');
-  await page.waitForLoadState('networkidle');
   await percySnapshot(page, 'Home - Mobile');
 });
