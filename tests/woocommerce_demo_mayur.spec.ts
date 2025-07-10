@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
 test('Test Onlineshop1 Home Page Responsiveness', async ({ page }) => {
