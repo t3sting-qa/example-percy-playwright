@@ -3,7 +3,7 @@ import percySnapshot from '@percy/playwright';
 
 test('Test Onlineshop1 Home Page Responsiveness', async ({ page }) => {
   await page.goto('https://mustershop-baiersdorf.de');
-  
+
   // Desktop
   await page.setViewportSize({ width: 1280, height: 800 });
   await percySnapshot(page, 'Home - Desktop');
@@ -18,30 +18,41 @@ test('Test Onlineshop1 Home Page Responsiveness', async ({ page }) => {
 });
 
 test('Header navigation responsiveness and links', async ({ page }) => {
-  // Desktop
+  // === Desktop ===
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('https://mustershop-baiersdorf.de');
 
-  // Functional: check header link
-  const aboutUsLink = page.locator('a:has-text("Über uns")').first();
-  await expect(aboutUsLink).toBeVisible();
+  const shopLinkDesktop = page.locator('a:has-text("Shop")').first();
+  await expect(shopLinkDesktop).toBeVisible();
+  await shopLinkDesktop.click();
+  await expect(page).toHaveURL(/.*shop/);
+  await percySnapshot(page, 'Shop Page - Desktop');
 
-  // Click it and confirm navigation works
-  await aboutUsLink.click();
-  await expect(page).toHaveURL(/.*ueber-uns/);
-
-  // Percy snapshot of Shop page after click
-  await percySnapshot(page, 'About Us Page - Desktop');
-
-  // Tablet
+  // === Tablet ===
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.goto('https://mustershop-baiersdorf.de');
-  await expect(aboutUsLink).toBeVisible();
+
+  // Open mobile/tablet menu if needed
+  const menuButtonTablet = page.locator('button[aria-label="Menü"]'); // adjust selector!
+  if (await menuButtonTablet.isVisible()) {
+    await menuButtonTablet.click();
+  }
+
+  const shopLinkTablet = page.locator('a:has-text("Shop")').first();
+  await expect(shopLinkTablet).toBeVisible();
   await percySnapshot(page, 'Header - Tablet');
 
-  // Mobile
+  // === Mobile ===
   await page.setViewportSize({ width: 375, height: 667 });
   await page.goto('https://mustershop-baiersdorf.de');
-  await expect(aboutUsLink).toBeVisible();
+
+  // Open mobile menu if needed
+  const menuButtonMobile = page.locator('button[aria-label="Menü"]'); // adjust selector!
+  if (await menuButtonMobile.isVisible()) {
+    await menuButtonMobile.click();
+  }
+
+  const shopLinkMobile = page.locator('a:has-text("Shop")').first();
+  await expect(shopLinkMobile).toBeVisible();
   await percySnapshot(page, 'Header - Mobile');
 });
