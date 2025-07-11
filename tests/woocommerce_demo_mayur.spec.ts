@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
+
 test('Homepage responsiveness and Shop page snapshots', async ({ page }) => {
   // Go to Home page
   await page.goto('https://mustershop-baiersdorf.de');
