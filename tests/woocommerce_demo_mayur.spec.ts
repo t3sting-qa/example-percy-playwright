@@ -1,35 +1,37 @@
 import { test, expect } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
-test('Homepage responsiveness + Shop page final hover click with XPath', async ({ page }) => {
-  // 1. Go to home
+test('Homepage responsiveness + Shop page click with unique XPath', async ({ page }) => {
+  // 1. Open home page
   await page.goto('https://mustershop-baiersdorf.de/');
   await percySnapshot(page, 'Home Page - Desktop');
 
-  // 2. Wait for Shop link by XPath
+  // 2. Use EXACT XPath you found
   const shopLink = page.locator('xpath=//*[@id="sm-17522106138009907-1"]');
-  await expect(shopLink).toBeVisible();
 
-  // 3. Hover to trigger hover effect
+  // 3. Wait for visible
+  await expect(shopLink).toBeVisible();
+  console.log('Shop link is visible');
+
+  // 4. Hover to trigger hover CSS effect (if any)
   await shopLink.hover();
   console.log('Hovered over Shop link');
 
-  // Optional: check bounding box for debug
-  const box = await shopLink.boundingBox();
-  console.log('Shop link bounding box:', box);
+  // 5. Log href for confirmation
+  const href = await shopLink.getAttribute('href');
+  console.log('Shop link href:', href);
 
-  // 4. Click and wait for navigation
+  // 6. Click and wait for navigation
   await Promise.all([
     page.waitForNavigation({ waitUntil: 'networkidle' }),
     shopLink.click(),
   ]);
-  console.log('Clicked Shop link, waiting for navigation');
+  console.log('Clicked Shop link and waited for navigation');
 
-  // 5. Confirm Shop page loaded by checking some unique selector
-  // Adjust below if you have a better unique one for the Shop page:
+  // 7. Confirm Shop page loaded — use any unique product block
   const shopGrid = page.locator('ul.products, div.products, section.products, li.product');
   await expect(shopGrid.first()).toBeVisible();
 
-  // 6. Take Percy snapshot of Shop page
+  // 8. Percy snapshot of the Shop page
   await percySnapshot(page, 'Shop Page - Desktop');
 });
