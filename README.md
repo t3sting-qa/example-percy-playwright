@@ -1,6 +1,5 @@
 # example-percy-playwright
 
-
 Example app showing integration of [Percy](https://percy.io/) visual testing into Playwright tests.
 
 Based on the [TodoMVC](https://github.com/tastejs/todomvc) [VanillaJS](https://github.com/tastejs/todomvc/tree/master/examples/vanillajs)
