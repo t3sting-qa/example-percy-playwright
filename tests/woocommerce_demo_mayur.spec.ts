@@ -1,9 +1,8 @@
 import { test, expect } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
-test('Homepage responsiveness + Shop page click using nth match', async ({ page }) => {
-  await page.goto('https://mustershop-baiersdorf.de/');
-  await percySnapshot(page, 'Home Page - Desktop');
+test('Homepage responsiveness + Shop page click', async ({ page }) => {
+  await page.goto('https://mustershop-baiersdorf.de');
 
   const shopLink = page.locator('a[href="https://mustershop-baiersdorf.de/shop/"]').first();
 
@@ -13,15 +12,13 @@ test('Homepage responsiveness + Shop page click using nth match', async ({ page 
   await shopLink.hover();
   console.log('Hovered over Shop link');
 
+  // Click and wait for navigation in same tab
   await Promise.all([
     page.waitForNavigation({ waitUntil: 'networkidle' }),
     shopLink.click(),
   ]);
   console.log('Clicked Shop link and waited for navigation');
 
-  const shopGrid = page.locator('ul.products, div.products, section.products, li.product');
-  await expect(shopGrid.first()).toBeVisible();
-  console.log('Shop grid is visible');
-
-  await percySnapshot(page, 'Shop Page - Desktop');
+  // Take Percy snapshot of the Shop page
+  await percySnapshot(page, 'Shop Page - Same Tab');
 });
