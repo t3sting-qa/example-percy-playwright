@@ -6,7 +6,7 @@ Based on the [TodoMVC](https://github.com/tastejs/todomvc) [VanillaJS](https://g
 app, forked at commit
 [4e301c7014093505dcf6678c8f97a5e8dee2d250](https://github.com/tastejs/todomvc/tree/4e301c7014093505dcf6678c8f97a5e8dee2d250).
 
-## Playwright Tutorial
+## Playwright Tutorials
 
 The tutorial assumes you're already familiar with JavaScript and
 [Playwright](https://playwright.dev/docs/library) and focuses on using it with Percy. You'll still
