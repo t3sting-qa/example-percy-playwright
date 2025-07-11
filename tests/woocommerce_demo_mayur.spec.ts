@@ -3,11 +3,16 @@ import percySnapshot from '@percy/playwright';
 
 test('Homepage responsiveness and Shop page snapshots', async ({ page }) => {
   // Go to Home page
+  await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('https://mustershop-baiersdorf.de');
 
   // Take Percy snapshots for Home page in desktop, tablet, mobile widths
   await percySnapshot(page, 'Home Page - Desktop', { widths: [1280] });
+
+  await page.setViewportSize({ width: 768, height: 800 });
   await percySnapshot(page, 'Home Page - Tablet', { widths: [768] });
+
+  await page.setViewportSize({ width: 375, height: 800 });
   await percySnapshot(page, 'Home Page - Mobile', { widths: [375] });
 
   // Find Shop link and verify
@@ -23,7 +28,12 @@ test('Homepage responsiveness and Shop page snapshots', async ({ page }) => {
   console.log('Navigated directly to Shop page');
 
   // Take Percy snapshots for Shop page in desktop, tablet, mobile widths
+  await page.setViewportSize({ width: 1280, height: 800 });
   await percySnapshot(page, 'Shop Page - Desktop', { widths: [1280] });
+
+  await page.setViewportSize({ width: 768, height: 800 });
   await percySnapshot(page, 'Shop Page - Tablet', { widths: [768] });
+
+  await page.setViewportSize({ width: 375, height: 800 });
   await percySnapshot(page, 'Shop Page - Mobile', { widths: [375] });
 });
