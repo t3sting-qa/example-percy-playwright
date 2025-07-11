@@ -4,7 +4,7 @@ import percySnapshot from '@percy/playwright';
 test('Homepage responsiveness and Shop page snapshots', async ({ page }) => {
   // Go to Home page
   await page.goto('https://mustershop-baiersdorf.de');
-
+ 
   // Take Percy snapshots for Home page in desktop, tablet, mobile widths
   await percySnapshot(page, 'Home Page - Desktop', { widths: [1280] });
   await percySnapshot(page, 'Home Page - Tablet', { widths: [768] });
