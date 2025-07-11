@@ -1,51 +1,45 @@
 import { test, expect } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
-test('Homepage responsiveness + Shop page click verification', async ({ page }) => {
-  // === Desktop ===
+test('Homepage responsiveness + Shop page hover click snapshot', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('https://mustershop-baiersdorf.de');
 
   await percySnapshot(page, 'Home Page - Desktop');
 
-  const shopLink = page.locator('a:has-text("Shop")').first();
-  await expect(shopLink).toBeVisible();
+  // Find the Shop link — make sure selector is correct
+  const shopLink = page.locator('a:has-text("Shop")');
 
-  const href = await shopLink.getAttribute('href');
-  console.log('Shop link href:', href);
+  // Hover the Shop link — triggers hover effect and submenu if any
+  await shopLink.hover();
+  console.log('Hovered over Shop link');
 
-  const box = await shopLink.boundingBox();
-  console.log('Shop link bounding box:', box);
+  // Small pause to let hover effect apply
+  await page.waitForTimeout(500);
 
-  // Highlight the link in Percy snapshot
-  await page.evaluate(() => {
-    const els = Array.from(document.querySelectorAll('a'));
-    els.forEach(el => {
-      if (el.textContent?.includes('Shop')) {
-        el.style.outline = '5px solid red';
-      }
-    });
-  });
+  // Optional: If there’s a submenu, wait for it
+  // Example: await page.waitForSelector('.your-submenu-class', { state: 'visible' });
 
-  // Percy snapshot BEFORE click to see highlight
-  await percySnapshot(page, 'Before Shop Click - Desktop');
-
+  // Click the Shop link while hover is active
   await Promise.all([
     page.waitForNavigation({ waitUntil: 'networkidle' }),
-    shopLink.click({ force: true }),
+    shopLink.click(),
   ]);
 
-  console.log('Navigation finished, current URL:', page.url());
+  console.log('Clicked Shop link, URL is:', page.url());
 
-  // Percy snapshot AFTER navigation
+  // Confirm you landed on the correct page
+  expect(page.url()).toContain('/shop');
+
+  // Percy snapshot
   await percySnapshot(page, 'Shop Page - Desktop');
 
-  // === Tablet ===
+  // Tablet
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.goto('https://mustershop-baiersdorf.de');
   await percySnapshot(page, 'Home Page - Tablet');
 
-  // === Mobile ===
+  // Mobile
   await page.setViewportSize({ width: 375, height: 667 });
   await page.goto('https://mustershop-baiersdorf.de');
   await percySnapshot(page, 'Home Page - Mobile');
